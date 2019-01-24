@@ -39,8 +39,6 @@ class Field{
 
 }
 
-
-
 public class Main {
 
     public static void main(String[] args) throws IOException {
@@ -50,10 +48,9 @@ public class Main {
 
         BufferedReader br1=new BufferedReader(new FileReader(data_file));
         BufferedReader br2=new BufferedReader(new FileReader(meta_file));
-
         ArrayList<Field> structure=new ArrayList<>();
-
         String r=br2.readLine();
+
         int inticount = -1;
         int fcount = -1;
         int charcount = -1;
@@ -105,7 +102,6 @@ public class Main {
         for(int i=0;i<structure.size();i++){
             System.out.println("Field Name: "+structure.get(i).getName()+", Field Type: "+structure.get(i).getType()+", Field Size: "+structure.get(i).getSize());
         }
-
         System.out.println();
         System.out.println("Finish reading data description file...");
         System.out.println();
@@ -133,7 +129,7 @@ public class Main {
                                 intis[id].add(parsed);
                             }
                             catch (Exception e){
-                                System.out.println(e);
+                                System.out.println("Invalid data");
                             }
                             break;
                         }
@@ -143,7 +139,7 @@ public class Main {
                                 intis[id].add(parsed);
                             }
                             catch (Exception e){
-                                System.out.println(e);
+                                System.out.println("Invalid data");
                             }
                             break;
                         }
@@ -160,7 +156,7 @@ public class Main {
                                 floats[id].add(parsed);
                             }
                             catch (Exception e){
-                                System.out.println(e);
+                                System.out.println("Invalid data");
                             }
                             break;
                         }
@@ -170,7 +166,7 @@ public class Main {
                                 floats[id].add(parsed);
                             }
                             catch (Exception e){
-                                System.out.println(e);
+                                System.out.println("Invalid data");
                             }
                             break;
                         }
@@ -207,7 +203,7 @@ public class Main {
                                 doubles[id].add(d);
                             }
                             catch(Exception e){
-                                System.out.println(e);
+                                System.out.println("Invalid data");
                             }
                             break;
                         }
@@ -217,7 +213,6 @@ public class Main {
                     }
                 }
                 start += bound;
-                //System.out.println(req);
             }
 
         }
@@ -263,4 +258,3 @@ public class Main {
 
     }
 }
-
