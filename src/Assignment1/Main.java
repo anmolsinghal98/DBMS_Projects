@@ -259,6 +259,7 @@ public class Main {
                 }
             }
         }
+        if(flag == 0) System.out.println("Error: Field name not found.");
 
     }
 }
