@@ -51,8 +51,18 @@ public class Transaction {
     }
 
     void transfer(Flight f1, Flight f2, int id){
-        
+        if(f2.plist.size()!=f2.getCapacity()){
+            for(int i=0;i<f1.plist.size();i++){
+                if(f1.plist.get(i).getId()==id){
+                    Passenger p=f1.plist.remove(i);
+                    f2.plist.add(p);
+                    p.flist.remove(f1);
+                    p.flist.add(f2);
+                }
+            }
+        }
     }
+
 
 
 
