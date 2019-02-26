@@ -1,6 +1,7 @@
 package Assignment2;
 
 import java.util.ArrayList;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 public class Database {
 
@@ -29,7 +30,7 @@ public class Database {
 }
 
 class Flight{
-
+    ReentrantReadWriteLock flock;
     private int id;
     ArrayList<Passenger> plist;
 
@@ -55,7 +56,7 @@ class Flight{
 }
 
 class Passenger{
-
+    ReentrantReadWriteLock plock;
     private int id;
     ArrayList<Flight> flist;
     Passenger(int id){

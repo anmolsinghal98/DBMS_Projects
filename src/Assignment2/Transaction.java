@@ -1,19 +1,20 @@
 package Assignment2;
 
 import java.util.ArrayList;
+import java.util.Random;
 
-public class Transaction {
+public class Transaction implements Runnable{
 
     Database d;
+    ConcurrencyControl CCM;
 
-    Transaction(Database d){
-        this.d=d;
+    Transaction(Database d, ConcurrencyControl CCM){
+        this.CCM = CCM;
+        this.d = d;
     }
 
     void reserve(Flight f, int id){
-
         if(f.plist.size()<f.getCapacity()){
-
             for(int i=0;i<d.passengers.size();i++){
                 if(d.passengers.get(i).getId()==id){
                     f.plist.add(d.passengers.get(i));
@@ -63,7 +64,48 @@ public class Transaction {
         }
     }
 
+    @Override
+    public void run(){
+        Random rand = new Random();
+        int ub_flights = d.flights.size();
+        int ub_passengers = d.passengers.size();
+        int rflights = rand.nextInt(ub_flights);
+        int rpassengers = rand.nextInt(ub_passengers);
+        Flight f1 = d.flights.get(rflights);
 
+        int chooser = rand.nextInt(5);
+
+        if(chooser == 0){
+            CCM.AcquireLock(1);
+            reserve(f1,rpassengers);
+            CCM.ReleaseLock(1);
+        }
+        else if(chooser == 1){
+            CCM.AcquireLock(1);
+            int rv = rand.nextInt(d.passengers.get(rpassengers).flist.size());
+            Flight tc = d.passengers.get(rpassengers).flist.get(rv);
+            cancel(tc,rv);
+            CCM.ReleaseLock(1);
+        }
+        else if(chooser == 2){
+            CCM.AcquireLock(2);
+            My_Flight(rpassengers);
+            CCM.ReleaseLock(2);
+
+        }
+        else if(chooser == 3){
+            CCM.AcquireLock(2);
+            Total_reservations();
+            CCM.ReleaseLock(2);
+        }
+        else if(chooser == 4){
+            CCM.AcquireLock(1);
+            int rflight2 = rand.nextInt(ub_flights);
+            Flight f2 = d.flights.get(rflight2);
+            transfer(f1,f2,rpassengers);
+            CCM.ReleaseLock(1);
+        }
+    }
 
 
 }

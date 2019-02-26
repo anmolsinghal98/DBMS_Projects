@@ -1,32 +1,42 @@
 package Assignment2;
 
-class Lock{
-    volatile int value;
-    Lock(int value){
-        this.value=value;
-    }
-    synchronized void shared_lock(){
-        this.value=1;
-    }
-    synchronized void exclusive_lock(){
-        this.value=2;
-    }
-    synchronized void unlock(){
-        this.value=0;
-    }
+import java.util.Random;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-}
+
 
 public class ConcurrencyControl implements Runnable{
 
-    Lock lock;
-    ConcurrencyControl(){
-        lock.unlock();
+    ReentrantReadWriteLock lock;
+
+    ConcurrencyControl(ReentrantReadWriteLock theLock){
+        lock = theLock;
     }
+
 
 
     @Override
     public void run() {
-
+        Random rand = new Random();
+        int random = rand.nextInt();
     }
+
+    public void AcquireLock(int i){
+        if(i == 1){
+            lock.writeLock().lock();
+        }
+        else if(i == 2){
+            lock.readLock().lock();
+        }
+    }
+
+    public void ReleaseLock(int i){
+        if(i == 1){
+            lock.writeLock().unlock();
+        }
+        else if(i == 2){
+            lock.readLock().unlock();
+        }
+    }
+
 }

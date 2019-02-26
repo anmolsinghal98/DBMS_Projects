@@ -1,6 +1,8 @@
 package Assignment2;
 
 
+import java.util.concurrent.locks.ReentrantReadWriteLock;
+
 public class Main {
 
     public static void main(String[] args){
@@ -22,7 +24,10 @@ public class Main {
             Passenger p=new Passenger(i+1);
             airline.passengers.add(p);
         }
-        Transaction t1=new Transaction(airline);
+        ReentrantReadWriteLock rwl = new ReentrantReadWriteLock();
+        ConcurrencyControl CCM = new ConcurrencyControl(rwl);
+        Transaction t1 = new Transaction(airline,CCM);
+        Transaction t2 = new Transaction(airline,CCM);
         t1.reserve(f2,1);
         t1.reserve(f2,2);
         t1.reserve(f1,3);
