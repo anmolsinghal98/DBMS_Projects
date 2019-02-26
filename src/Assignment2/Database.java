@@ -11,6 +11,21 @@ public class Database {
         flights=new ArrayList<>();
         passengers=new ArrayList<>();
     }
+
+    void print_contents(){
+        System.out.println("Flight Details-");
+        for(int i=0;i<flights.size();i++){
+            System.out.println("Flight ID: "+flights.get(i).getId()+ " , Flight Capacity: "+flights.get(i).getCapacity()+" , Passenger Count: "+flights.get(i).plist.size());
+        }
+        System.out.println();
+        System.out.println("Passenger Details-");
+        for(int i=0;i<passengers.size();i++){
+            System.out.println("Passenger ID: "+passengers.get(i).getId());
+            for(int j=0;j<passengers.get(i).flist.size();j++){
+                System.out.println("Reserved flight ID: "+passengers.get(i).flist.get(j).getId());
+            }
+        }
+    }
 }
 
 class Flight{

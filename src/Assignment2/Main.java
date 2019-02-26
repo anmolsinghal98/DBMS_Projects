@@ -7,22 +7,28 @@ public class Main {
 
         Database airline=new Database();
 
-        Flight f1=new Flight(1,10);
-        Flight f2=new Flight(2,3);
-        Flight f3=new Flight(3, 5);
+        Flight f1=new Flight(1,5);
+        Flight f2=new Flight(2,2);
+        Flight f3=new Flight(3, 3);
+        Flight f4=new Flight(4,10);
+        Flight f5=new Flight(5,4);
         airline.flights.add(f1);
         airline.flights.add(f2);
         airline.flights.add(f3);
+        airline.flights.add(f4);
+        airline.flights.add(f5);
 
-        Passenger p1=new Passenger(1);
-        Passenger p2=new Passenger(2);
-        Passenger p3=new Passenger(3);
-        Passenger p4=new Passenger(4);
-        Passenger p5=new Passenger(5);
-        airline.passengers.add(p1);
-        airline.passengers.add(p2);
-        airline.passengers.add(p3);
-        airline.passengers.add(p4);
-        airline.passengers.add(p5);
+        for(int i=0;i<21;i++){
+            Passenger p=new Passenger(i+1);
+            airline.passengers.add(p);
+        }
+        Transaction t1=new Transaction(airline);
+        t1.reserve(f2,1);
+        t1.reserve(f2,2);
+        t1.reserve(f1,3);
+        t1.transfer(f1,f2,3);
+        t1.reserve(f1,2);
+        //System.out.println(s);
+        airline.print_contents();
     }
 }
