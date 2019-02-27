@@ -28,17 +28,10 @@ public class Main {
         }
 
         ConcurrencyControl CCM = new ConcurrencyControl();
-        //Transaction t1 = new Transaction(airline,CCM);
-        //t1.reserve(f2,1);
-        //t1.reserve(f2,2);
-        //t1.reserve(f1,3);
-        //t1.reserve(f3,4);
-        //t1.reserve(f4,5);
-        //Transaction t2 = new Transaction(airline,CCM);
 
         int tasks=100;
 
-        int noThreads=1;
+        int noThreads=4;
 
         long startTime=System.currentTimeMillis();
 
@@ -57,19 +50,6 @@ public class Main {
         long endTime=System.currentTimeMillis();
         System.out.println(endTime-startTime);
 
-//        Thread a=new Thread(t1);
-//        Thread b=new Thread(t2);
-//
-//        a.start();
-//        b.start();
-//
-//        a.join();
-//        b.join();
 
-
-//        t1.transfer(f1,f2,3);
-//        t1.reserve(f1,2);
-//        //System.out.println(s);
-//        airline.print_contents();
     }
 }

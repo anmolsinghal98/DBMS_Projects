@@ -70,7 +70,7 @@ public class Transaction implements Runnable{
 
     void transfer(Flight f1, Flight f2, int id){
         if(f1 == f2){
-            System.out.println("Same plane bruh");
+            //System.out.println("Same plane bruh");
             return;
         }
         CCM.AcquireLock(1,f1.lock);
@@ -108,7 +108,6 @@ public class Transaction implements Runnable{
             int rpassengers = rand.nextInt(ub_passengers);
             Flight f1 = d.flights.get(rflights);
             int chooser = rand.nextInt(5);
-            System.out.println("function number: " + chooser  + " Flight number: " + f1.getId() + "Passenger Number: " + rpassengers);
             if(chooser == 0){
                 try{
                     Thread.sleep(10);
@@ -137,16 +136,19 @@ public class Transaction implements Runnable{
                     Thread.sleep(10);
                 }
                 catch (Exception e){ }
-                ArrayList<Flight> f=My_Flight(rpassengers);
-                System.out.println("Flights for passenger "+rpassengers);
+                ArrayList<Flight> f=My_Flight(d.passengers.get(rpassengers).getId());
+                System.out.println("Flights for passenger "+d.passengers.get(rpassengers).getId());
                 if(f!=null){
                     for(int s=0;s<f.size();s++){
                         System.out.print(f.get(s).getId()+",");
                     }
+                    if(f.size() > 0)
+                    System.out.println();
                 }
                 if(f==null || f.size()==0){
                     System.out.println("No flights booked");
                 }
+
             }
             else if(chooser == 3){
                 try{
@@ -166,7 +168,6 @@ public class Transaction implements Runnable{
                 transfer(f1,f2,rpassengers);
 
             }
-            d.print_contents();
         }
 
     }
