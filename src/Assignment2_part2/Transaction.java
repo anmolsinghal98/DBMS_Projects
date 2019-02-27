@@ -25,6 +25,7 @@ public class Transaction implements Runnable{
                     f.plist.add(d.passengers.get(i));
                     d.passengers.get(i).flist.add(f);
                     CCM.ReleaseLock(1,d.passengers.get(i).lock);
+                    break;
                 }
             }
         }
@@ -39,6 +40,7 @@ public class Transaction implements Runnable{
                 f.plist.remove(d.passengers.get(i));
                 d.passengers.get(i).flist.remove(f);
                 CCM.ReleaseLock(1,d.passengers.get(i).lock);
+                break;
             }
         }
         CCM.ReleaseLock(1,f.lock);
@@ -48,6 +50,7 @@ public class Transaction implements Runnable{
         for(int i=0;i<d.passengers.size();i++){
             CCM.AcquireLock(2,d.passengers.get(i).lock);
             if(d.passengers.get(i).getId()==id){
+                CCM.ReleaseLock(2,d.passengers.get(i).lock);
                 return d.passengers.get(i).flist;
             }
             CCM.ReleaseLock(2,d.passengers.get(i).lock);
@@ -66,19 +69,30 @@ public class Transaction implements Runnable{
     }
 
     void transfer(Flight f1, Flight f2, int id){
+        if(f1 == f2){
+            System.out.println("Same plane bruh");
+            return;
+        }
         CCM.AcquireLock(1,f1.lock);
         CCM.AcquireLock(1,f2.lock);
-        if(f2.plist.size()!=f2.getCapacity()){
+        boolean flag = false;
+        if(f2.plist.size()<f2.getCapacity()){
             for(int i=0;i<f1.plist.size();i++){
                 if(f1.plist.get(i).getId()==id){
+                    flag = true;
                     Passenger p=f1.plist.remove(i);
                     CCM.AcquireLock(1,p.lock);
                     f2.plist.add(p);
                     p.flist.remove(f1);
                     p.flist.add(f2);
                     CCM.ReleaseLock(1,p.lock);
+                    break;
                 }
             }
+        }
+        if(!flag) System.out.println("Could not transfer");
+        else{
+            System.out.println("Transfer of "+id+" from flight"+f1.getId()+" to "+f2.getId());
         }
         CCM.ReleaseLock(1,f1.lock);
         CCM.ReleaseLock(1,f2.lock);
@@ -94,14 +108,14 @@ public class Transaction implements Runnable{
             int rpassengers = rand.nextInt(ub_passengers);
             Flight f1 = d.flights.get(rflights);
             int chooser = rand.nextInt(5);
-
+            System.out.println("function number: " + chooser  + " Flight number: " + f1.getId() + "Passenger Number: " + rpassengers);
             if(chooser == 0){
                 try{
                     Thread.sleep(10);
                 }
                 catch (Exception e){ }
-                reserve(f1,rpassengers);
-                System.out.println("Flight with id "+f1.getId()+" reserved for "+rpassengers);
+                reserve(f1,d.passengers.get(rpassengers).getId());
+                System.out.println("Flight with id "+f1.getId()+" reserved for passenger"+rpassengers);
             }
             else if(chooser == 1){
                 try{
@@ -111,7 +125,7 @@ public class Transaction implements Runnable{
                 if(d.passengers.get(rpassengers).flist.size()!=0){
                     int rv = rand.nextInt(d.passengers.get(rpassengers).flist.size());
                     Flight tc = d.passengers.get(rpassengers).flist.get(rv);
-                    cancel(tc,rpassengers);
+                    cancel(tc,d.passengers.get(rpassengers).getId());
                     System.out.println("Flight with id "+tc.getId()+" canceled for "+rpassengers);
                 }
                 else{
@@ -133,7 +147,6 @@ public class Transaction implements Runnable{
                 if(f==null || f.size()==0){
                     System.out.println("No flights booked");
                 }
-                System.out.println();
             }
             else if(chooser == 3){
                 try{
@@ -151,8 +164,9 @@ public class Transaction implements Runnable{
                 }
                 catch (Exception e){ }
                 transfer(f1,f2,rpassengers);
-                System.out.println("Transfer of "+rpassengers+" from flight"+f1.getId()+" to "+f2.getId());
+
             }
+            d.print_contents();
         }
 
     }
