@@ -1,11 +1,13 @@
 package Assignment2;
 
 
-import java.util.concurrent.locks.ReentrantReadWriteLock;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 public class Main {
 
-    public static void main(String[] args){
+    public static void main(String[] args) throws InterruptedException {
 
         Database airline=new Database();
 
@@ -24,16 +26,51 @@ public class Main {
             Passenger p=new Passenger(i+1);
             airline.passengers.add(p);
         }
-        ReentrantReadWriteLock rwl = new ReentrantReadWriteLock();
+
+        Lock rwl=new Lock();
         ConcurrencyControl CCM = new ConcurrencyControl(rwl);
-        Transaction t1 = new Transaction(airline,CCM);
-        Transaction t2 = new Transaction(airline,CCM);
-        t1.reserve(f2,1);
-        t1.reserve(f2,2);
-        t1.reserve(f1,3);
-        t1.transfer(f1,f2,3);
-        t1.reserve(f1,2);
-        //System.out.println(s);
-        airline.print_contents();
+        //Transaction t1 = new Transaction(airline,CCM);
+        //t1.reserve(f2,1);
+        //t1.reserve(f2,2);
+        //t1.reserve(f1,3);
+        //t1.reserve(f3,4);
+        //t1.reserve(f4,5);
+        //Transaction t2 = new Transaction(airline,CCM);
+
+        int tasks=10;
+
+        int noThreads=3;
+
+        long startTime=System.currentTimeMillis();
+
+        ExecutorService exec= Executors.newFixedThreadPool(noThreads);
+
+        for(int i=0;i<noThreads;i++){
+            Transaction t=new Transaction(airline,CCM,tasks/noThreads);
+            exec.execute(t);
+        }
+
+        if(!exec.isTerminated()){
+            exec.shutdown();
+            exec.awaitTermination(5L, TimeUnit.SECONDS);
+        }
+
+        long endTime=System.currentTimeMillis();
+        System.out.println(endTime-startTime);
+
+//        Thread a=new Thread(t1);
+//        Thread b=new Thread(t2);
+//
+//        a.start();
+//        b.start();
+//
+//        a.join();
+//        b.join();
+
+
+//        t1.transfer(f1,f2,3);
+//        t1.reserve(f1,2);
+//        //System.out.println(s);
+//        airline.print_contents();
     }
 }
