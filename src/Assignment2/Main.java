@@ -37,16 +37,16 @@ public class Main {
         //t1.reserve(f4,5);
         //Transaction t2 = new Transaction(airline,CCM);
 
-        int tasks=10;
+        int tasks=100;
 
-        int noThreads=3;
+        int noThreads=4;
 
         long startTime=System.currentTimeMillis();
 
         ExecutorService exec= Executors.newFixedThreadPool(noThreads);
 
-        for(int i=0;i<noThreads;i++){
-            Transaction t=new Transaction(airline,CCM,tasks/noThreads);
+        for(int i=0;i<tasks;i++){
+            Transaction t=new Transaction(airline,CCM,1);
             exec.execute(t);
         }
 

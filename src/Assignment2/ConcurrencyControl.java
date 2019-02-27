@@ -7,10 +7,10 @@ class Lock{
         value=0;
     }
     synchronized void acquire_share_lock(){
-        value=1;
+        value=2;
     }
     synchronized void acquire_exclusive_lock(){
-        value=2;
+        value=1;
     }
     synchronized void unlock(){
         value=0;

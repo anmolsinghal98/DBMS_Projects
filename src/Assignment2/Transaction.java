@@ -69,64 +69,75 @@ public class Transaction implements Runnable{
     @Override
     public void run(){
         Random rand = new Random();
-        for(int i=0;i<tasks;i++){
-            int ub_flights = d.flights.size();
-            int ub_passengers = d.passengers.size();
-            int rflights = rand.nextInt(ub_flights);
-            int rpassengers = rand.nextInt(ub_passengers);
-            Flight f1 = d.flights.get(rflights);
-            int chooser = rand.nextInt(5);
+        try{
+            for(int i=0;i<tasks;i++){
+                int ub_flights = d.flights.size();
+                int ub_passengers = d.passengers.size();
+                int rflights = rand.nextInt(ub_flights);
+                int rpassengers = rand.nextInt(ub_passengers);
+                Flight f1 = d.flights.get(rflights);
+                int chooser = rand.nextInt(5);
 
-            if(chooser == 0){
-                CCM.AcquireLock(1);
-                reserve(f1,rpassengers);
-                System.out.println("Flight with id "+f1.getId()+" reserved for "+rpassengers);
-                CCM.ReleaseLock(1);
-            }
-            else if(chooser == 1){
-                CCM.AcquireLock(1);
-                if(d.passengers.get(rpassengers).flist.size()!=0){
-                    int rv = rand.nextInt(d.passengers.get(rpassengers).flist.size());
-                    Flight tc = d.passengers.get(rpassengers).flist.get(rv);
-                    cancel(tc,rpassengers);
-                    System.out.println("Flight with id "+tc.getId()+" canceled for "+rpassengers);
+                if(chooser == 0){
+                    CCM.AcquireLock(1);
+                    Thread.sleep(10);
+                    reserve(f1,d.passengers.get(rpassengers).getId());
+                    System.out.println("Flight with id "+f1.getId()+" reserved for "+rpassengers);
+                    CCM.ReleaseLock(1);
                 }
-                else{
-                    System.out.println("No cancellation");
-                }
-                CCM.ReleaseLock(1);
-            }
-            else if(chooser == 2){
-                CCM.AcquireLock(2);
-                ArrayList<Flight> f=My_Flight(rpassengers);
-                System.out.println("Flights for passenger "+rpassengers);
-                if(f!=null){
-                    for(int s=0;s<f.size();s++){
-                        System.out.print(f.get(s).getId()+",");
+                else if(chooser == 1){
+                    CCM.AcquireLock(1);
+                    Thread.sleep(10);
+                    if(d.passengers.get(rpassengers).flist.size()!=0){
+                        int rv = rand.nextInt(d.passengers.get(rpassengers).flist.size());
+                        Flight tc = d.passengers.get(rpassengers).flist.get(rv);
+                        cancel(tc,d.passengers.get(rpassengers).getId());
+                        System.out.println("Flight with id "+tc.getId()+" canceled for "+rpassengers);
                     }
+                    else{
+                        System.out.println("No cancellation");
+                    }
+                    CCM.ReleaseLock(1);
                 }
-                if(f==null || f.size()==0){
-                    System.out.println("No flights booked");
-                }
-                System.out.println();
-                CCM.ReleaseLock(2);
+                else if(chooser == 2){
+                    CCM.AcquireLock(2);
+                    Thread.sleep(10);
+                    ArrayList<Flight> f=My_Flight(rpassengers);
+                    System.out.println("Flights for passenger "+rpassengers);
+                    if(f!=null){
+                        for(int s=0;s<f.size();s++){
+                            System.out.print(f.get(s).getId()+",");
+                        }
+                    }
+                    if(f==null || f.size()==0){
+                        System.out.println("No flights booked");
+                    }
+                    System.out.println();
+                    CCM.ReleaseLock(2);
 
-            }
-            else if(chooser == 3){
-                CCM.AcquireLock(2);
-                int s=Total_reservations();
-                System.out.println("Total reservations- "+s);
-                CCM.ReleaseLock(2);
-            }
-            else if(chooser == 4){
-                CCM.AcquireLock(1);
-                int rflight2 = rand.nextInt(ub_flights);
-                Flight f2 = d.flights.get(rflight2);
-                transfer(f1,f2,rpassengers);
-                System.out.println("Transfer of "+rpassengers+" from flight"+f1.getId()+" to "+f2.getId());
-                CCM.ReleaseLock(1);
+                }
+                else if(chooser == 3){
+                    CCM.AcquireLock(2);
+                    Thread.sleep(10);
+                    int s=Total_reservations();
+                    System.out.println("Total reservations- "+s);
+                    CCM.ReleaseLock(2);
+                }
+                else if(chooser == 4){
+                    CCM.AcquireLock(1);
+                    Thread.sleep(10);
+                    int rflight2 = rand.nextInt(ub_flights);
+                    Flight f2 = d.flights.get(rflight2);
+                    transfer(f1,f2,d.passengers.get(rpassengers).getId());
+                    System.out.println("Transfer of "+rpassengers+" from flight"+f1.getId()+" to "+f2.getId());
+                    CCM.ReleaseLock(1);
+                }
             }
         }
+        catch(Exception e){
+            System.out.println("Timeout");
+        }
+
 
     }
 

@@ -165,7 +165,7 @@ public class Transaction implements Runnable{
                     Thread.sleep(10);
                 }
                 catch (Exception e){ }
-                transfer(f1,f2,rpassengers);
+                transfer(f1,f2,d.passengers.get(rpassengers).getId());
 
             }
         }
