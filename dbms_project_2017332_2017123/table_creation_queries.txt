@@ -1,0 +1,148 @@
+CREATE DATABASE `diet clinic management system` 
+
+CREATE TABLE `doctor` (
+  `Did` int(11) NOT NULL,
+  `Name` varchar(45) NOT NULL,
+  `Contact No` varchar(45) NOT NULL,
+  `Email` varchar(45) DEFAULT NULL,
+  `City` varchar(45) DEFAULT NULL,
+  `Country` varchar(45) DEFAULT NULL,
+  `Qualification` varchar(45) NOT NULL,
+  `Salary` int(11) DEFAULT NULL,
+  `SuperID` int(11) NOT NULL,
+  PRIMARY KEY (`Did`)
+) 
+
+CREATE TABLE `Package` (
+  `Duration` int(11) NOT NULL,
+  `Type` varchar(45) DEFAULT NULL,
+  `Cost` int(11) DEFAULT NULL,
+  `Package ID` int(11) NOT NULL,
+  PRIMARY KEY (`Package ID`)
+) 
+
+CREATE TABLE `Patient` (
+  `PatientID` int(11) NOT NULL,
+  `PName` varchar(45) NOT NULL,
+  `Age` int(11) NOT NULL,
+  `Gender` char(1) NOT NULL,
+  `Contact No` varchar(45) NOT NULL,
+  `Email` varchar(45) DEFAULT NULL,
+  `Height` varchar(45) NOT NULL,
+  `Weight` varchar(45) NOT NULL,
+  `DoctorID` int(11) NOT NULL,
+  `PackageID` int(11) NOT NULL,
+  `Start Date` date NOT NULL,
+  `Country` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`PatientID`)
+)
+
+
+CREATE TABLE `PatientAllergies` (
+  `PatientID` int(11) DEFAULT NULL,
+  `Allergies` varchar(45) DEFAULT NULL,
+  `ID` varchar(45) NOT NULL
+)
+
+
+CREATE TABLE `Patient_Diet` (
+  `PatientID` int(11) NOT NULL,
+  `Diet` varchar(45) DEFAULT NULL,
+  `Meal` varchar(45) DEFAULT NULL,
+  `ID` int(11) NOT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `PatientID_idx` (`PatientID`),
+  CONSTRAINT `PatientID` FOREIGN KEY (`PatientID`) REFERENCES `patient` (`PatientID`)
+)
+
+
+CREATE TABLE `Patient_Likes` (
+  `PatientID` int(11) DEFAULT NULL,
+  `Food` varchar(45) DEFAULT NULL,
+  `Like/Dislike` varchar(45) DEFAULT NULL,
+  `ID` int(11) NOT NULL
+) 
+
+
+CREATE TABLE `Patient_MedicalHistory` (
+  `PatientID` int(11) DEFAULT NULL,
+  `Medical History` varchar(45) DEFAULT NULL,
+  `ID` int(11) NOT NULL,
+  PRIMARY KEY (`ID`)
+) 
+
+
+CREATE TABLE `Patient_PhysicalActivity` (
+  `PatientID` int(11) DEFAULT NULL,
+  `Physical Activity` varchar(45) DEFAULT NULL,
+  `ID` int(11) NOT NULL,
+  PRIMARY KEY (`ID`)
+) 
+
+
+
+CREATE TABLE `Prescription_DietPlan` (
+  `PatientID` int(11) DEFAULT NULL,
+  `Diet` varchar(45) DEFAULT NULL,
+  `Meal` varchar(45) DEFAULT NULL,
+  `ID` int(11) NOT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `P_idx` (`PatientID`),
+  KEY `PID_idx` (`PatientID`),
+  CONSTRAINT `PID` FOREIGN KEY (`PatientID`) REFERENCES `patient` (`PatientID`)
+) 
+
+
+
+CREATE TABLE `Prescription_Supplements` (
+  `PatientID` int(11) DEFAULT NULL,
+  `Supplements` varchar(45) DEFAULT NULL,
+  `ID` int(11) NOT NULL,
+  PRIMARY KEY (`ID`)
+) 
+
+
+
+CREATE TABLE `PrescriptionTests` (
+  `PatientID` int(11) DEFAULT NULL,
+  `Tests` varchar(45) DEFAULT NULL,
+  `ID` int(11) NOT NULL,
+  PRIMARY KEY (`ID`)
+) 
+
+
+CREATE TABLE `Role` (
+  `DoctorID` int(11) NOT NULL,
+  `DomainID` int(11) NOT NULL,
+  `Specialisation` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`DoctorID`,`DomainID`)
+) 
+
+INSERT INTO `doctor` VALUES (1,'Priya Kaushal','9810678641','priyak5@gmail.com','New Delhi','India','PhD',5000000,4),(2,'Arsh Verma','9958557300','arshv123@gmail.com','Amritsar','India','MSc',2000000,4),(3,'Tanisha Pandey','8527935511','pandeyji@gmail.com','Bangalore','India','MSc',4000000,4),(4,'Samarth Singhal','9711018582','pr0marth@gmail.com','New York','USA','PhD',10000000,0),(5,'Tejas Oberoi','9582072323','breakupwithyourgf@gmail.com','Colombo','Sri Lanka','BSc',100000,4);
+
+INSERT INTO `Package` VALUES (6,'WG',15000,1),(6,'WL',15000,2),(3,'WG',9000,3),(3,'WL',9000,4),(2,'WL',7000,5),(2,'WG',7000,6),(1,'WG',4500,7),(1,'WL',4500,8);
+
+INSERT INTO `Patient_Diet` VALUES (1,'PB Sandwich','Breakfast',1),(1,'Dal Rice','Lunch',2),(1,'Paneer Roti','Dinner',3),(2,'Poha','Breakfast',4),(2,'Dal Roti','Lunch',5),(2,'Chicken Rice','Dinner',6),(3,'Uttapam','Breakfast',7),(3,'Kathi Roll','Lunch',8),(3,'Maggi','Dinner',9);
+
+
+INSERT INTO `Patient_Likes` VALUES (1,'Oreo Shake','Like',1),(1,'Maggi','Dislike',2),(2,'Cheese Sandwich','Like',3),(2,'Brinjal','Dislike',4),(5,'Eggs','Dislike',5),(5,'Brain','Like',6);
+
+INSERT INTO `Patient_MedicalHistory` VALUES (1,'Anorexia',1),(1,'Bullimia',2),(4,'Diabetes',3),(5,'High BP',4),(5,'Eating Disorder',5),(3,'TB',6);
+
+INSERT INTO `Patient_PhysicalActivity` VALUES (1,'Pretense of Gymming',1),(2,'Walking ',2),(3,'None',3),(4,'Cycling',4),(5,'Giggling',5);
+
+INSERT INTO `Patient` VALUES (1,'Mihir Goyal',19,'M','9910914900','snek57kgs@gmail.com','186','57',3,1,'2012-03-19','India'),(2,'Tanisha Gosain',19,'F','9560701482','ilovesaksham@gmail.com','167','48',2,1,'2013-01-19','USA'),(3,'Vishal Samal',19,'M','9968157280','iluvfood@gmail.com','187','102',1,3,'2011-01-12','India'),(4,'Prakhar Goel',19,'M','9582136073','iluvcoke@gmail.com','175','83',4,5,'2013-05-17','Sri Lanka'),(5,'Chavvi Keswani',20,'F','9717138181','shashwatismyworld@gmail.com','170','62',5,1,'2014-09-12','India'),(6,'Raghav Rathi',20,'M','9971582820','raghav@gmail.com','195','70',2,1,'2015-07-16','USA'),(7,'Prakhar Goel',19,'M','9876547324','prak@gmail.com','178','75',4,1,'2016-07-09','India'),(8,'Udbhava Kaul ',18,'M','6574929129','uddhu@gmail.com','180','65',1,1,'2017-07-07','USA');
+
+INSERT INTO `PatientAllergies` VALUES (1,'Milk','1'),(2,'Peanuts','2'),(2,'Almonds','3'),(4,'Cheese','4'),(5,'Gluten','5');
+
+INSERT INTO `Prescription_DietPlan` VALUES (1,'Oats','Breakfast',1),(1,'Dal Rice','Lunch',2),(1,'Chicken','Dinner',3),(2,'Porridge','Breakfast',4),(2,'Roti Veggies','Lunch',5),(2,'Egg Curry','Dinner',6),(3,'Eggs','Breakfast',7),(3,'Rice','Lunch',8),(3,'Roti Paneer','Dinner',9);
+
+INSERT INTO `Prescription_Supplements` VALUES (1,'Magnesium',1),(2,'Vitamin-D',2),(3,'Zinc',3),(1,'Potassium',4),(4,'Vitamin B',5),(5,'Lacto Bassilus',6);
+
+INSERT INTO `PrescriptionTests` VALUES (5,'Blood Profile',1),(5,'Lipid Profile',2),(1,'Testosterone',3),(2,'MRI',4);
+
+INSERT INTO `Role` VALUES (1,2,'Clinical Nutrition'),(2,2,'Sports Nutrition'),(3,1,'Child Nutrition'),(4,1,'Clinical Nutrition'),(5,3,'Child Nutrition');
+
+
+
+

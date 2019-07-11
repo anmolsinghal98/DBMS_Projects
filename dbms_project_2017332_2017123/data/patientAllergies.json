@@ -1,0 +1,5 @@
+[{"PatientID":1, "Allergies":"Milk", "ID":"1"},
+ {"PatientID":2, "Allergies":"Peanuts", "ID":"2"},
+ {"PatientID":2, "Allergies":"Almonds", "ID":"3"},
+ {"PatientID":4, "Allergies":"Cheese", "ID":"4"},
+ {"PatientID":5, "Allergies":"Gluten", "ID":"5"}]

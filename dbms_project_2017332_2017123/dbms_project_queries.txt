@@ -1,0 +1,49 @@
+Team Members-
+
+Yashvardhan Singh (2017123)
+Anmol Singhal (2017332)
+
+Queries-
+
+1. Give all Patient Records With Maximum Number Of Allergies-
+
+select * from Patient P where( 
+select count(*) from PatientAllergies A where A.PatientID= P.PatientID group by PatientID) >= ALL(
+(select count(*) from PatientAllergies group by PatientID));
+
+2. Give all Doctor records with salary more than the average salary-
+
+select * from doctor where doctor.salary >= 
+(select avg(salary) from doctor);
+
+3. Give all Patient Records with the doctor and patient belonging to the same country and the doctor specialises in Child Nutrition-
+
+select * from Patient where DoctorID IN 
+ (select Did from doctor, Role where doctor.Country=Patient.Country 
+ AND doctor.Did=Role.DoctorID AND Role.Specialisation="Clinical Nutrition");
+
+4. Give all the details of a package that has been booked by all doctors-
+
+select * from Package P where NOT EXISTS (
+select Did from doctor D where Did NOT IN (
+select DoctorID from Patient P1 where P.`Package ID`=P1.PackageID));
+
+5. Give prescribed diet and patient details of all patients whose package is of more than 3 months-
+
+select * from Prescription_DietPlan natural join Patient P1  where 
+P1.PatientID IN (select PatientID from Package P
+where P.`Package ID`=P1.PackageID AND Duration>3);
+
+6. Give the name and specialisation of all doctors other than those specialising in Clinical Nutrition-
+
+select DId,Name,Specialisation from doctor inner join Role on DId=DoctorID
+where  Did NOT IN ( select DoctorID from Role
+where Specialisation="Clinical Nutrition");
+
+7. Give all patient details enrolled in a weight loss package-
+
+select * from Patient P
+where P.PackageID IN (
+select `Package ID` from Package P1 where
+P.PackageID=P1.`Package ID` AND P1.Type="WL");
+

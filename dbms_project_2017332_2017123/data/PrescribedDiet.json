@@ -1,0 +1,9 @@
+[{"PatientID":1, "Diet":"Oats", "Meal":"Breakfast", "ID":1},
+ {"PatientID":1, "Diet":"Dal Rice", "Meal":"Lunch", "ID":2},
+ {"PatientID":1, "Diet":"Chicken", "Meal":"Dinner", "ID":3},
+ {"PatientID":2, "Diet":"Porridge", "Meal":"Breakfast", "ID":4},
+ {"PatientID":2, "Diet":"Roti Veggies", "Meal":"Lunch", "ID":5},
+ {"PatientID":2, "Diet":"Egg Curry", "Meal":"Dinner", "ID":6},
+ {"PatientID":3, "Diet":"Eggs", "Meal":"Breakfast", "ID":7},
+ {"PatientID":3, "Diet":"Rice", "Meal":"Lunch", "ID":8},
+ {"PatientID":3, "Diet":"Roti Paneer", "Meal":"Dinner", "ID":9}]

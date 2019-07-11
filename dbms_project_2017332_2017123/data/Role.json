@@ -1,0 +1,5 @@
+[{"DoctorID":1, "DomainID":2, "Specialisation":"Clinical Nutrition"},
+ {"DoctorID":2, "DomainID":2, "Specialisation":"Sports Nutrition"},
+ {"DoctorID":3, "DomainID":1, "Specialisation":"Child Nutrition"},
+ {"DoctorID":4, "DomainID":1, "Specialisation":"Clinical Nutrition"},
+ {"DoctorID":5, "DomainID":3, "Specialisation":"Child Nutrition"}]

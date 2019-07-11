@@ -1,0 +1,6 @@
+[{"PatientID":1, "Supplements":"Magnesium", "ID":1},
+ {"PatientID":2, "Supplements":"Vitamin-D", "ID":2},
+ {"PatientID":3, "Supplements":"Zinc", "ID":3},
+ {"PatientID":1, "Supplements":"Potassium", "ID":4},
+ {"PatientID":4, "Supplements":"Vitamin B", "ID":5},
+ {"PatientID":5, "Supplements":"Lacto Bassilus", "ID":6}]

@@ -1,0 +1,6 @@
+[{"PatientID":1, "Medical History":"Anorexia", "ID":1},
+ {"PatientID":1, "Medical History":"Bullimia", "ID":2},
+ {"PatientID":4, "Medical History":"Diabetes", "ID":3},
+ {"PatientID":5, "Medical History":"High BP", "ID":4},
+ {"PatientID":5, "Medical History":"Eating Disorder", "ID":5},
+ {"PatientID":3, "Medical History":"TB", "ID":6}]

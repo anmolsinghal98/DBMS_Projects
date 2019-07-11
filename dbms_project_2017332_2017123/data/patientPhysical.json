@@ -1,0 +1,5 @@
+[{"PatientID":1, "Physical Activity":"Pretense of Gymming", "ID":1},
+ {"PatientID":2, "Physical Activity":"Walking ", "ID":2},
+ {"PatientID":3, "Physical Activity":"None", "ID":3},
+ {"PatientID":4, "Physical Activity":"Cycling", "ID":4},
+ {"PatientID":5, "Physical Activity":"Giggling", "ID":5}]

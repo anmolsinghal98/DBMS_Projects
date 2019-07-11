@@ -1,0 +1,6 @@
+[{"PatientID":1, "Food":"Oreo Shake", "Like/Dislike":"Like", "ID":1},
+ {"PatientID":1, "Food":"Maggi", "Like/Dislike":"Dislike", "ID":2},
+ {"PatientID":2, "Food":"Cheese Sandwich", "Like/Dislike":"Like", "ID":3},
+ {"PatientID":2, "Food":"Brinjal", "Like/Dislike":"Dislike", "ID":4},
+ {"PatientID":5, "Food":"Eggs", "Like/Dislike":"Dislike", "ID":5},
+ {"PatientID":5, "Food":"Brain", "Like/Dislike":"Like", "ID":6}]
