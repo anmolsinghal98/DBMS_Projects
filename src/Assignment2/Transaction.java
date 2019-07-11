@@ -26,7 +26,6 @@ public class Transaction implements Runnable{
         }
     }
 
-    //TODO check remove
     void cancel(Flight f,int id){
         for(int i=0;i<d.passengers.size();i++){
             if(d.passengers.get(i).getId()==id){
@@ -78,14 +77,14 @@ public class Transaction implements Runnable{
                 Flight f1 = d.flights.get(rflights);
                 int chooser = rand.nextInt(5);
 
-                if(chooser == 0){
+                if(chooser ==0){
                     CCM.AcquireLock(1);
                     Thread.sleep(10);
                     reserve(f1,d.passengers.get(rpassengers).getId());
                     System.out.println("Flight with id "+f1.getId()+" reserved for "+rpassengers);
                     CCM.ReleaseLock(1);
                 }
-                else if(chooser == 1){
+                else if(chooser==1){
                     CCM.AcquireLock(1);
                     Thread.sleep(10);
                     if(d.passengers.get(rpassengers).flist.size()!=0){
@@ -99,7 +98,7 @@ public class Transaction implements Runnable{
                     }
                     CCM.ReleaseLock(1);
                 }
-                else if(chooser == 2){
+                else if(chooser ==2){
                     CCM.AcquireLock(2);
                     Thread.sleep(10);
                     ArrayList<Flight> f=My_Flight(rpassengers);
@@ -116,14 +115,14 @@ public class Transaction implements Runnable{
                     CCM.ReleaseLock(2);
 
                 }
-                else if(chooser == 3){
+                else if(chooser ==3){
                     CCM.AcquireLock(2);
                     Thread.sleep(10);
                     int s=Total_reservations();
                     System.out.println("Total reservations- "+s);
                     CCM.ReleaseLock(2);
                 }
-                else if(chooser == 4){
+                else if(chooser ==4){
                     CCM.AcquireLock(1);
                     Thread.sleep(10);
                     int rflight2 = rand.nextInt(ub_flights);

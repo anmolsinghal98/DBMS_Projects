@@ -37,7 +37,7 @@ public class Main {
         //t1.reserve(f4,5);
         //Transaction t2 = new Transaction(airline,CCM);
 
-        int tasks=100;
+        int tasks=50;
 
         int noThreads=4;
 

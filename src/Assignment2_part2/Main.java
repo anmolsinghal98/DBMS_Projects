@@ -31,7 +31,7 @@ public class Main {
 
         int tasks=100;
 
-        int noThreads=4;
+        int noThreads=2;
 
         long startTime=System.currentTimeMillis();
 
