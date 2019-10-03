@@ -50,27 +50,17 @@ public class Main {
             exec.execute(t);
         }
 
-        if(!exec.isTerminated()){
+        if(exec.isTerminated() == false){
             exec.shutdown();
-            exec.awaitTermination(5L, TimeUnit.SECONDS);
+            exec.awaitTermination(6L, TimeUnit.SECONDS);
         }
 
         long endTime=System.currentTimeMillis();
         System.out.println(endTime-startTime);
 
-//        Thread a=new Thread(t1);
-//        Thread b=new Thread(t2);
-//
-//        a.start();
-//        b.start();
-//
-//        a.join();
-//        b.join();
-
-
-//        t1.transfer(f1,f2,3);
-//        t1.reserve(f1,2);
-//        //System.out.println(s);
-//        airline.print_contents();
+       Thread a=new Thread(t1);
+       Thread b=new Thread(t2);
+       a.start();
+       a.join();s();
     }
 }
